@@ -1,0 +1,23 @@
+.env
+.env.*
+!.env.example
+
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Build
+bin/
+target/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse
+.metadata/
+.settings/
+.project
+.classpath
