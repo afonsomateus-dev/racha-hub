@@ -23,15 +23,10 @@ public class PlayerService {
 	}
 	
 	public PlayerResponseDTO create(PlayerRequestDTO dto) {
-		try {
-			Player player = playerMapper.toEntity(dto);
-			player = playerRepository.save(player);
-			
-			return playerMapper.toResponse(player);
-		} catch(Exception e) {
-			System.out.println(e);
-			return null;
-		}
+		Player player = playerMapper.toEntity(dto);
+		player = playerRepository.save(player);
+		
+		return playerMapper.toResponse(player);
 	}
 	
 	public List<PlayerResponseDTO> findAll() {
