@@ -12,6 +12,8 @@ import com.afonsomateus.rachahub_api.dto.player.PlayerRequestDTO;
 import com.afonsomateus.rachahub_api.dto.player.PlayerResponseDTO;
 import com.afonsomateus.rachahub_api.service.PlayerService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/players")
 public class PlayerController {
@@ -22,13 +24,8 @@ public class PlayerController {
 	}
 	
 	@PostMapping
-	public PlayerResponseDTO create(@RequestBody PlayerRequestDTO dto) {
-		try {
-			return playerService.create(dto);
-		} catch (Exception e) {
-			System.out.println(e);
-			return null;
-		}
+	public PlayerResponseDTO create(@Valid @RequestBody PlayerRequestDTO dto) {
+		return playerService.create(dto);
 	}
 	
 	@GetMapping
