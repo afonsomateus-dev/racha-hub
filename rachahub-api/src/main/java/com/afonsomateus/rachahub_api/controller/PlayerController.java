@@ -2,6 +2,8 @@ package com.afonsomateus.rachahub_api.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,12 +31,8 @@ public class PlayerController {
 	}
 	
 	@GetMapping
-	public List<PlayerResponseDTO> list() {
-		try {
-			return playerService.findAll();
-		} catch (Exception e) {
-			System.out.println(e);
-			return null;
-		}
+	public ResponseEntity<List<PlayerResponseDTO>> list() {
+		List<PlayerResponseDTO> players = playerService.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(players);
 	}
 }
