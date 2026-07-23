@@ -1,9 +1,6 @@
 package com.afonsomateus.rachahub_api.service;
 
 import java.util.List;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.player.PlayerRequestDTO;
@@ -30,14 +27,9 @@ public class PlayerService {
 	}
 	
 	public List<PlayerResponseDTO> findAll() {
-		try {
-			return playerRepository.findAll()
-				.stream()
-				.map(player -> playerMapper.toResponse(player))
-				.toList();
-		} catch (Exception e) {
-			System.out.println(e);
-			return null;
-		}
+		return playerRepository.findAll()
+			.stream()
+			.map(player -> playerMapper.toResponse(player))
+			.toList();	
 	}
 }
