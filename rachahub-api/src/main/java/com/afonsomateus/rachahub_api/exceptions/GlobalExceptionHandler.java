@@ -1,4 +1,4 @@
-package com.afonsomateus.rachahub_api.exceptions;
+	package com.afonsomateus.rachahub_api.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,9 +61,10 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<ErrorResponseDTO> handleInternalServerError(RuntimeException exception) {
+		String message = "An unexpected error occurred: " + exception.getMessage();
 		ErrorResponseDTO error = new ErrorResponseDTO(
 			HttpStatus.INTERNAL_SERVER_ERROR.value(),
-			"An unexpected error occurred: " + exception.getMessage()
+			message
 		);
 		
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
