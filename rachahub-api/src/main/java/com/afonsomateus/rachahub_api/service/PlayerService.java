@@ -1,9 +1,9 @@
 package com.afonsomateus.rachahub_api.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.player.PlayerRequestDTO;
@@ -12,6 +12,7 @@ import com.afonsomateus.rachahub_api.entity.Player;
 import com.afonsomateus.rachahub_api.exceptions.ResourceNotFoundException;
 import com.afonsomateus.rachahub_api.mapper.PlayerMapper;
 import com.afonsomateus.rachahub_api.repository.PlayerRepository;
+import com.afonsomateus.rachahub_api.utils.Helpers;
 
 @Service
 public class PlayerService {
@@ -42,6 +43,20 @@ public class PlayerService {
 			.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Player not found."));
 
+		return playerMapper.toResponse(player);
+	}
+	
+	public PlayerResponseDTO update(UUID id, PlayerRequestDTO dto) {
+		Player player = playerRepository
+			.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Player not found."));
+		
+		Player playerReceived = playerMapper.toEntity(dto);
+		
+		BeanUtils.copyProperties(playerReceived, player, Helpers.getNullPropertyNames(playerMapper.toEntity(dto)));
+		
+		playerRepository.save(player);
+		
 		return playerMapper.toResponse(player);
 	}
 }
