@@ -20,6 +20,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "players")
@@ -28,6 +29,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
+@ToString
 public class Player {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
