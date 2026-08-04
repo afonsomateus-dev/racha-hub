@@ -1,12 +1,14 @@
 package com.afonsomateus.rachahub_api.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.season.SeasonRequestDTO;
 import com.afonsomateus.rachahub_api.dto.season.SeasonResponseDTO;
 import com.afonsomateus.rachahub_api.entity.Season;
+import com.afonsomateus.rachahub_api.exceptions.ResourceNotFoundException;
 import com.afonsomateus.rachahub_api.mapper.SeasonMapper;
 import com.afonsomateus.rachahub_api.repository.SeasonRepository;
 
@@ -33,5 +35,12 @@ public class SeasonService {
 			.stream()
 			.map((season) -> seasonMapper.toResponse(season))
 			.toList();
+	}
+	
+	public SeasonResponseDTO findById(UUID id) {
+		Season season = seasonRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Season not found."));
+		
+		return seasonMapper.toResponse(season);
 	}
 }
