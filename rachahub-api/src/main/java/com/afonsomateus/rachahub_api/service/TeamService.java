@@ -3,6 +3,7 @@ package com.afonsomateus.rachahub_api.service;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.team.TeamRequestDTO;
@@ -11,6 +12,7 @@ import com.afonsomateus.rachahub_api.entity.Team;
 import com.afonsomateus.rachahub_api.exceptions.ResourceNotFoundException;
 import com.afonsomateus.rachahub_api.mapper.TeamMapper;
 import com.afonsomateus.rachahub_api.repository.TeamRepository;
+import com.afonsomateus.rachahub_api.utils.Helpers;
 
 @Service
 public class TeamService {
@@ -40,6 +42,20 @@ public class TeamService {
 		Team team = teamRepository
 			.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
+		
+		return teamMapper.toResponse(team);
+	}
+	
+	public TeamResponseDTO update(UUID id, TeamRequestDTO dto) {
+		Team team = teamRepository
+			.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
+		
+		Team teamReceived = teamMapper.toEntity(dto);
+		
+		BeanUtils.copyProperties(teamReceived, team, Helpers.getNullPropertyNames(teamReceived));
+		
+		teamRepository.save(team);
 		
 		return teamMapper.toResponse(team);
 	}
