@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.afonsomateus.rachahub_api.dto.team.TeamRequestDTO;
 import com.afonsomateus.rachahub_api.dto.team.TeamResponseDTO;
 import com.afonsomateus.rachahub_api.service.TeamService;
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -42,6 +42,12 @@ public class TeamController {
 	@GetMapping("/{id}")
 	public ResponseEntity<TeamResponseDTO> getById(@PathVariable UUID id) {
 		TeamResponseDTO team = teamService.getById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(team);
+	}
+	
+	@PatchMapping("/{id}")
+	public ResponseEntity<TeamResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody TeamRequestDTO dto) {
+		TeamResponseDTO team = teamService.update(id, dto);
 		return ResponseEntity.status(HttpStatus.OK).body(team);
 	}
 }
