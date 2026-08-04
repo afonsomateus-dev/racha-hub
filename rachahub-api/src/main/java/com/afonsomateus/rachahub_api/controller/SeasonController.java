@@ -1,11 +1,13 @@
 package com.afonsomateus.rachahub_api.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,13 @@ public class SeasonController {
 	@GetMapping
 	public ResponseEntity<List<SeasonResponseDTO>> findAll() {
 		List<SeasonResponseDTO> response = seasonService.findAll();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<SeasonResponseDTO> findById(@PathVariable UUID id) {
+		SeasonResponseDTO response = seasonService.findById(id);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
