@@ -59,4 +59,8 @@ public class PlayerService {
 		
 		return playerMapper.toResponse(player);
 	}
+	
+	public void delete(UUID id) {
+		playerRepository.deleteById(id);
+	}
 }
