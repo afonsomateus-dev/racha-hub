@@ -59,5 +59,9 @@ public class TeamService {
 		
 		return teamMapper.toResponse(team);
 	}
+	
+	public void delete(UUID id) {
+		teamRepository.deleteById(id);
+	}
 }
 	
