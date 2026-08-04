@@ -6,7 +6,7 @@ import com.afonsomateus.rachahub_api.dto.season.SeasonRequestDTO;
 import com.afonsomateus.rachahub_api.dto.season.SeasonResponseDTO;
 import com.afonsomateus.rachahub_api.entity.Season;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SeasonMapper {
 	SeasonResponseDTO toResponse(Season season);
 	Season toEntity(SeasonRequestDTO seasonDTO);
