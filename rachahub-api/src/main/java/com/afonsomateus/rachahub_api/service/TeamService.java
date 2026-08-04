@@ -1,5 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.team.TeamRequestDTO;
@@ -23,6 +25,13 @@ public class TeamService {
 		team = teamRepository.save(team);
 		
 		return teamMapper.toResponse(team);
+	}
+	
+	public List<TeamResponseDTO> findAll() {
+		return teamRepository.findAll()
+			.stream()
+			.map((team) -> teamMapper.toResponse(team))
+			.toList();
 	}
 }
 	
