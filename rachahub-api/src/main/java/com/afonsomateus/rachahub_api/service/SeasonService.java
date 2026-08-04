@@ -1,5 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.season.SeasonRequestDTO;
@@ -23,5 +25,13 @@ public class SeasonService {
 		season = seasonRepository.save(season);
 		
 		return seasonMapper.toResponse(season);
+	}
+	
+	public List<SeasonResponseDTO> findAll() {
+		return seasonRepository
+			.findAll()
+			.stream()
+			.map((season) -> seasonMapper.toResponse(season))
+			.toList();
 	}
 }
