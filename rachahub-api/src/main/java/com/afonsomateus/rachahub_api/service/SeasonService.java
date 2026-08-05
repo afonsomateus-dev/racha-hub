@@ -58,4 +58,8 @@ public class SeasonService {
 		
 		return seasonMapper.toResponse(season);
 	}
+	
+	public void delete(UUID id) {
+		seasonRepository.deleteById(id);
+	}
 }
