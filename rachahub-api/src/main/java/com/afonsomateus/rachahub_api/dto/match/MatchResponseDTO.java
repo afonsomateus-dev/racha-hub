@@ -7,6 +7,7 @@ import com.afonsomateus.rachahub_api.dto.season.SeasonResponseDTO;
 
 public record MatchResponseDTO(
 	UUID id, 
+	String title,
 	SeasonResponseDTO season, 
 	LocalDate date
 ) {}
