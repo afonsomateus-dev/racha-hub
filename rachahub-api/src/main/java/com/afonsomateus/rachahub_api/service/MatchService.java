@@ -71,4 +71,8 @@ public class MatchService {
 		
 		return matchMapper.toResponse(match);
 	}
+	
+	public void delete(UUID id) {
+		matchRepository.deleteById(id);
+	}
 }
