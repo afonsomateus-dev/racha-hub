@@ -1,5 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.match.MatchRequestDTO;
@@ -33,5 +35,12 @@ public class MatchService {
 		match = matchRepository.save(match);
 		
 		return matchMapper.toResponse(match);
+	}
+	
+	public List<MatchResponseDTO> findAll() {
+		return matchRepository.findAll()
+			.stream()
+			.map((match) -> matchMapper.toResponse(match))
+			.toList();
 	}
 }
