@@ -36,7 +36,7 @@ public class MatchController {
 	@GetMapping
 	public ResponseEntity<List<MatchResponseDTO>> findAll() {
 		List<MatchResponseDTO> response = matchService.findAll();
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 	@GetMapping("/{id}")
