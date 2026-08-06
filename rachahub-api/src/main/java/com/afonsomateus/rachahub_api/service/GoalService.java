@@ -1,5 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.goal.GoalRequestDTO;
@@ -44,5 +46,12 @@ public class GoalService {
 		goal = goalRepository.save(goal);
 		
 		return goalMapper.toResponse(goal);
+	}
+	
+	public List<GoalResponseDTO> findAll() {
+		return goalRepository.findAll()
+			.stream()
+			.map((goal) -> goalMapper.toResponse(goal))
+			.toList();
 	}
 }
