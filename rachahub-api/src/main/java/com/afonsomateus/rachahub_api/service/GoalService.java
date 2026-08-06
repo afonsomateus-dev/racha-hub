@@ -1,6 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -53,5 +54,12 @@ public class GoalService {
 			.stream()
 			.map((goal) -> goalMapper.toResponse(goal))
 			.toList();
+	}
+	
+	public GoalResponseDTO findById(UUID id) {
+		Goal goal = goalRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Goal not found."));
+		
+		return goalMapper.toResponse(goal);
 	}
 }
