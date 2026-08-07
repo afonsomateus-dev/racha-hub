@@ -3,6 +3,9 @@ package com.afonsomateus.rachahub_api.service;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.coyote.BadRequestException;
+import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.goal.GoalRequestDTO;
@@ -17,6 +20,7 @@ import com.afonsomateus.rachahub_api.repository.GoalRepository;
 import com.afonsomateus.rachahub_api.repository.MatchRepository;
 import com.afonsomateus.rachahub_api.repository.PlayerRepository;
 import com.afonsomateus.rachahub_api.repository.TeamRepository;
+import com.afonsomateus.rachahub_api.utils.Helpers;
 
 import lombok.RequiredArgsConstructor;
 
@@ -59,6 +63,32 @@ public class GoalService {
 	public GoalResponseDTO findById(UUID id) {
 		Goal goal = goalRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Goal not found."));
+		
+		return goalMapper.toResponse(goal);
+	}
+	
+	public GoalResponseDTO update(UUID id, GoalRequestDTO dto) {
+		Goal goal = goalRepository.getReferenceById(id);
+		Player player = null;
+		Match match = null;
+		Team team = null;
+		
+		if (dto.playerId() != null) {
+			player = playerRepository.getReferenceById(dto.playerId());
+			goal.setPlayer(player);
+		}
+		
+		if (dto.matchId() != null) {
+			match = matchRepository.getReferenceById(dto.matchId());
+			goal.setMatch(match);
+		}
+		
+		if (dto.teamId() != null) {
+			team = teamRepository.getReferenceById(dto.teamId());
+			goal.setTeam(team);
+		}
+		
+		goalRepository.save(goal);
 		
 		return goalMapper.toResponse(goal);
 	}
