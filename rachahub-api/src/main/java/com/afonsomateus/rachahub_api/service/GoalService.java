@@ -92,4 +92,8 @@ public class GoalService {
 		
 		return goalMapper.toResponse(goal);
 	}
+	
+	public void delete(UUID id) {
+		goalRepository.deleteById(id);
+	}
 }
