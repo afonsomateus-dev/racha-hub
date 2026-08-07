@@ -37,13 +37,13 @@ public class GoalController {
 	@GetMapping
 	public ResponseEntity<List<GoalResponseDTO>> findAll() {
 		List<GoalResponseDTO> response = goalService.findAll();
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<GoalResponseDTO> findById(@PathVariable UUID id) {
 		GoalResponseDTO response = goalService.findById(id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 	@PatchMapping("/{id}")
