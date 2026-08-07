@@ -3,9 +3,11 @@ package com.afonsomateus.rachahub_api.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,5 +43,11 @@ public class GoalController {
 	public ResponseEntity<GoalResponseDTO> findById(@PathVariable UUID id) {
 		GoalResponseDTO response = goalService.findById(id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+	
+	@PatchMapping("/{id}")
+	public ResponseEntity<GoalResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody GoalRequestDTO dto) {
+		GoalResponseDTO response = goalService.update(id, dto);;
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }
