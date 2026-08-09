@@ -74,4 +74,8 @@ public class ParticipationService {
 		
 		return participationMapper.toResponse(participationRepository.save(participation));
 	}
+	
+	public void delete(UUID id) {
+		participationRepository.deleteById(id);
+	}
 }
