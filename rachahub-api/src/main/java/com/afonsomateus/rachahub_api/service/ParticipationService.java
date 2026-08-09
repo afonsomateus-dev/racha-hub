@@ -55,4 +55,23 @@ public class ParticipationService {
 		
 		return participationMapper.toResponse(participation);
 	}
+	
+	public ParticipationResponseDTO update(UUID id, ParticipationRequestDTO dto) {
+		Participation participation = participationRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Participation not found."));
+		
+		if (dto.matchId() != null) {
+			Match match = matchRepository.findById(dto.matchId())
+				.orElseThrow(() -> new ResourceNotFoundException("Match not found."));
+			participation.setMatch(match);
+		}
+		
+		if (dto.teamId() != null) {
+			Team team = teamRepository.findById(dto.teamId())
+				.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
+			participation.setTeam(team);
+		}
+		
+		return participationMapper.toResponse(participationRepository.save(participation));
+	}
 }
