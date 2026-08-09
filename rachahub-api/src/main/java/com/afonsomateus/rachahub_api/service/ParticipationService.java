@@ -1,6 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,12 @@ public class ParticipationService {
 			.stream()
 			.map((participation) -> participationMapper.toResponse(participation))
 			.toList();
+	}
+	
+	public ParticipationResponseDTO findById(UUID id) {
+		Participation participation = participationRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Participation not found."));
+		
+		return participationMapper.toResponse(participation);
 	}
 }
