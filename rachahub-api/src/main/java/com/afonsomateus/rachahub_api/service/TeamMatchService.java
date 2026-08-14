@@ -1,5 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.teamMatch.TeamMatchRequestDTO;
@@ -36,5 +38,12 @@ public class TeamMatchService {
 		teamMatch.setGoals(dto.goals());
 		
 		return teamMatchMapper.toResponse(teamMatchRepository.save(teamMatch));
+	}
+	
+	public List<TeamMatchResponseDTO> findAll() {
+		return teamMatchRepository.findAll()
+			.stream()
+			.map((tm) -> teamMatchMapper.toResponse(tm))
+			.toList();
 	}
 }
