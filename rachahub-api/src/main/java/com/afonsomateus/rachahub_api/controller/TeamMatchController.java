@@ -1,7 +1,10 @@
 package com.afonsomateus.rachahub_api.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,5 +28,11 @@ public class TeamMatchController {
 	public ResponseEntity<TeamMatchResponseDTO> create(@Valid @RequestBody TeamMatchRequestDTO dto) {
 		TeamMatchResponseDTO response = teamMatchService.create(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<TeamMatchResponseDTO>> findAll() {
+		List<TeamMatchResponseDTO> response = teamMatchService.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }
