@@ -43,4 +43,14 @@ public class TeamMatchController {
 		TeamMatchResponseDTO response = teamMatchService.findById(teamId, matchId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
+	
+	@PatchMapping("/teams/{teamId}/matches/{matchId}")
+	public ResponseEntity<TeamMatchResponseDTO> update(
+		@PathVariable UUID teamId, 
+		@PathVariable UUID matchId, 
+		@RequestBody TeamMatchRequestDTO dto
+	) {
+		TeamMatchResponseDTO response = teamMatchService.update(teamId, matchId, dto);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
 }
