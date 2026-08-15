@@ -6,5 +6,5 @@ import com.afonsomateus.rachahub_api.dto.team.TeamResponseDTO;
 public record TeamMatchResponseDTO(
 	TeamResponseDTO team,
 	MatchResponseDTO match,
-	int goals
+	Integer goals
 ) {}
