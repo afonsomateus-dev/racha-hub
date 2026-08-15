@@ -1,6 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import com.afonsomateus.rachahub_api.dto.teamMatch.TeamMatchResponseDTO;
 import com.afonsomateus.rachahub_api.entity.Match;
 import com.afonsomateus.rachahub_api.entity.Team;
 import com.afonsomateus.rachahub_api.entity.TeamMatch;
+import com.afonsomateus.rachahub_api.entity.TeamMatchId;
 import com.afonsomateus.rachahub_api.exceptions.ResourceNotFoundException;
 import com.afonsomateus.rachahub_api.mapper.TeamMatchMapper;
 import com.afonsomateus.rachahub_api.repository.MatchRepository;
@@ -45,5 +47,13 @@ public class TeamMatchService {
 			.stream()
 			.map((tm) -> teamMatchMapper.toResponse(tm))
 			.toList();
+	}
+	
+	public TeamMatchResponseDTO findById(UUID teamId, UUID matchId) {
+		TeamMatchId id = new TeamMatchId(teamId, matchId);
+		TeamMatch teamMatch = teamMatchRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("The team did not play this match."));
+		
+		return teamMatchMapper.toResponse(teamMatch);
 	}
 }
