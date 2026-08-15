@@ -56,4 +56,28 @@ public class TeamMatchService {
 		
 		return teamMatchMapper.toResponse(teamMatch);
 	}
+	
+	public TeamMatchResponseDTO update(UUID teamId, UUID matchId, TeamMatchRequestDTO dto) {
+		TeamMatchId id = new TeamMatchId(teamId, matchId);
+		TeamMatch teamMatch = teamMatchRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("The team did not play this match."));
+		
+		if (dto.teamId() != null) {
+			Team team = teamRepository.findById(dto.teamId())
+				.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
+			teamMatch.setTeam(team);
+		}
+		
+		if (dto.matchId() != null) {
+			Match match = matchRepository.findById(dto.matchId())
+				.orElseThrow(() -> new ResourceNotFoundException("Match not found."));
+			teamMatch.setMatch(match);
+		} 
+		
+		if (dto.goals() != null && dto.goals() != teamMatch.getGoals() && dto.goals() >= 0) {
+			teamMatch.setGoals(dto.goals());
+		}
+		
+		return teamMatchMapper.toResponse(teamMatchRepository.save(teamMatch));
+	}
 }
