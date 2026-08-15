@@ -34,5 +34,5 @@ public class TeamMatch {
 	private Match match;
 	
 	@Column(nullable = false)
-	private int goals;
+	private Integer goals;
 }
