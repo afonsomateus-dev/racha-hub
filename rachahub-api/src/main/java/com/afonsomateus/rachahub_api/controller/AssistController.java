@@ -1,7 +1,10 @@
 package com.afonsomateus.rachahub_api.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,5 +27,11 @@ public class AssistController {
 	public ResponseEntity<AssistResponseDTO> create(@Valid @RequestBody AssistRequestDTO dto) {
 		AssistResponseDTO response = assistService.create(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<AssistResponseDTO>> findAll() {
+		List<AssistResponseDTO> response = assistService.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }
