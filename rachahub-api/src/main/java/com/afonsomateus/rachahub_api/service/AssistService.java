@@ -1,11 +1,12 @@
 package com.afonsomateus.rachahub_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.assist.AssistRequestDTO;
 import com.afonsomateus.rachahub_api.dto.assist.AssistResponseDTO;
 import com.afonsomateus.rachahub_api.entity.Assist;
-import com.afonsomateus.rachahub_api.entity.Goal;
 import com.afonsomateus.rachahub_api.entity.Match;
 import com.afonsomateus.rachahub_api.entity.Player;
 import com.afonsomateus.rachahub_api.entity.Team;
@@ -43,5 +44,12 @@ public class AssistService {
 		assist.setTeam(team);
 		
 		return assistMapper.toResponse(assistRepository.save(assist));
+	}
+	
+	public List<AssistResponseDTO> findAll() {
+		return assistRepository.findAll()
+			.stream()
+			.map((assist) -> assistMapper.toResponse(assist))
+			.toList();
 	}
 }
