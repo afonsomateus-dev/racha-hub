@@ -1,5 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.playerParticipation.PlayerParticipationRequestDTO;
@@ -39,5 +41,12 @@ public class PlayerParticipationService {
 		playerParticipation = playerParticipationRepository.save(playerParticipation);
 		
 		return playerParticipationMapper.toResponse(playerParticipation);
+	}
+	
+	public List<PlayerParticipationResponseDTO> findAll() {
+		return playerParticipationRepository.findAll()
+			.stream()
+			.map((pp) -> playerParticipationMapper.toResponse(pp))
+			.toList();
 	}
 }
