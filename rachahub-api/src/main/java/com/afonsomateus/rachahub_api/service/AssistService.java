@@ -60,4 +60,33 @@ public class AssistService {
 		
 		return assistMapper.toResponse(assist);
 	}
+	
+	public AssistResponseDTO update(UUID id, AssistRequestDTO dto) {
+		Assist assist = assistRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Assist not found."));
+		
+		if (dto.playerId() != null) {
+			Player player = playerRepository.findById(dto.playerId())
+				.orElseThrow(() -> new ResourceNotFoundException("Player not found."));
+			assist.setPlayer(player);
+		}
+		
+		if (dto.teamId() != null) {
+			Team team = teamRepository.findById(dto.teamId())
+					.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
+			assist.setTeam(team);
+		}
+		
+		if (dto.matchId() != null) {
+			Match match = matchRepository.findById(dto.matchId())
+				.orElseThrow(() -> new ResourceNotFoundException("Match not found."));
+			assist.setMatch(match);
+		}
+		
+		return assistMapper.toResponse(assist);
+	}
+	
+	public void delete(UUID id) {
+		assistRepository.deleteById(id);
+	}
 }
