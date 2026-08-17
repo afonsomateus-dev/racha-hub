@@ -1,6 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -51,5 +52,12 @@ public class AssistService {
 			.stream()
 			.map((assist) -> assistMapper.toResponse(assist))
 			.toList();
+	}
+	
+	public AssistResponseDTO findById(UUID id) {
+		Assist assist = assistRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Assist not found."));
+		
+		return assistMapper.toResponse(assist);
 	}
 }
