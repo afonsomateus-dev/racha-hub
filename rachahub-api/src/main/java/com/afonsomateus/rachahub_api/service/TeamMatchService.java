@@ -80,4 +80,9 @@ public class TeamMatchService {
 		
 		return teamMatchMapper.toResponse(teamMatchRepository.save(teamMatch));
 	}
+	
+	public void delete(UUID teamId, UUID matchId) {
+		TeamMatchId id = new TeamMatchId(teamId, matchId);
+		teamMatchRepository.deleteById(id);
+	}
 }
