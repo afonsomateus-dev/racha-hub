@@ -1,6 +1,7 @@
 package com.afonsomateus.rachahub_api.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import com.afonsomateus.rachahub_api.dto.playerParticipation.PlayerParticipation
 import com.afonsomateus.rachahub_api.entity.Participation;
 import com.afonsomateus.rachahub_api.entity.Player;
 import com.afonsomateus.rachahub_api.entity.PlayerParticipation;
+import com.afonsomateus.rachahub_api.entity.PlayerParticipationId;
 import com.afonsomateus.rachahub_api.exceptions.ResourceNotFoundException;
 import com.afonsomateus.rachahub_api.mapper.PlayerParticipationMapper;
 import com.afonsomateus.rachahub_api.repository.ParticipationRepository;
@@ -48,5 +50,13 @@ public class PlayerParticipationService {
 			.stream()
 			.map((pp) -> playerParticipationMapper.toResponse(pp))
 			.toList();
+	}
+	
+	public PlayerParticipationResponseDTO findById(UUID playerId, UUID participationId) {
+		PlayerParticipationId id = new PlayerParticipationId(playerId, participationId);
+		PlayerParticipation playerParticipation = playerParticipationRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("Player participation not found."));
+		
+		return playerParticipationMapper.toResponse(playerParticipation);
 	}
 }
