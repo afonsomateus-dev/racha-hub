@@ -6,7 +6,7 @@ import com.afonsomateus.rachahub_api.dto.playerParticipation.PlayerParticipation
 import com.afonsomateus.rachahub_api.dto.playerParticipation.PlayerParticipationResponseDTO;
 import com.afonsomateus.rachahub_api.entity.PlayerParticipation;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PlayerParticipationMapper {
 	PlayerParticipationResponseDTO toResponse(PlayerParticipation playerParticipation);
 	PlayerParticipation toEntity(PlayerParticipationRequestDTO playerParticipationDTO);
