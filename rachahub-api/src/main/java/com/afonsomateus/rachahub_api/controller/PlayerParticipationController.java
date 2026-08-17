@@ -1,10 +1,12 @@
 package com.afonsomateus.rachahub_api.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,12 @@ public class PlayerParticipationController {
 	@GetMapping
 	public ResponseEntity<List<PlayerParticipationResponseDTO>> findAll() {
 		List<PlayerParticipationResponseDTO> response = playerParticipationService.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	
+	@GetMapping("/players/{playerId}/participations/{participationId}")
+	public ResponseEntity<PlayerParticipationResponseDTO> findById(@PathVariable UUID playerId, @PathVariable UUID participationId) {
+		PlayerParticipationResponseDTO response = playerParticipationService.findById(playerId, participationId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }
