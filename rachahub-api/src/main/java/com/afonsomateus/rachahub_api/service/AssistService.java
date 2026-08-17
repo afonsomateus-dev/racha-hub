@@ -83,6 +83,8 @@ public class AssistService {
 			assist.setMatch(match);
 		}
 		
+		assistRepository.save(assist);
+		
 		return assistMapper.toResponse(assist);
 	}
 	
