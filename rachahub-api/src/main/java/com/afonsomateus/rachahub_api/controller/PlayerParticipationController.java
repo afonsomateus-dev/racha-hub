@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +41,16 @@ public class PlayerParticipationController {
 	@GetMapping("/players/{playerId}/participations/{participationId}")
 	public ResponseEntity<PlayerParticipationResponseDTO> findById(@PathVariable UUID playerId, @PathVariable UUID participationId) {
 		PlayerParticipationResponseDTO response = playerParticipationService.findById(playerId, participationId);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	
+	@PatchMapping("/players/{playerId}/participations/{participationId}")
+	public ResponseEntity<PlayerParticipationResponseDTO> update(
+		@PathVariable UUID playerId, 
+		@PathVariable UUID participationId,
+		@Valid @RequestBody PlayerParticipationRequestDTO dto
+	) {
+		PlayerParticipationResponseDTO response = playerParticipationService.update(playerId, participationId, dto);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }
