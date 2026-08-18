@@ -96,4 +96,9 @@ public class PlayerParticipationService {
 		
 		return playerParticipationMapper.toResponse(playerParticipationToSave);
 	}
+	
+	public void delete(UUID playerId, UUID participationId) {
+		PlayerParticipationId id = new PlayerParticipationId(playerId, participationId);
+		playerParticipationRepository.deleteById(id);
+	}
 }
