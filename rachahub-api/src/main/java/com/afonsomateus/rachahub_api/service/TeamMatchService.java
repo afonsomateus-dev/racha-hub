@@ -57,28 +57,41 @@ public class TeamMatchService {
 		return teamMatchMapper.toResponse(teamMatch);
 	}
 	
-	public TeamMatchResponseDTO update(UUID teamId, UUID matchId, TeamMatchRequestDTO dto) {
+	public TeamMatchResponseDTO update(UUID teamId, UUID matchId, TeamMatchRequestDTO dto) {			
 		TeamMatchId id = new TeamMatchId(teamId, matchId);
 		TeamMatch teamMatch = teamMatchRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("The team did not play this match."));
+			.orElseThrow(() -> new ResourceNotFoundException("The team did not play this match."));
 		
-		if (dto.teamId() != null) {
-			Team team = teamRepository.findById(dto.teamId())
+		UUID newTeamId = dto.teamId() != null ? dto.teamId() : teamId;
+		UUID newMatchId = dto.matchId() != null ? dto.matchId() : matchId;
+		Integer newGoals = dto.goals() != null ? dto.goals() : teamMatch.getGoals();
+		
+		if (newTeamId.equals(dto.teamId()) && newMatchId.equals(dto.matchId()) && newGoals.equals(teamMatch.getGoals())) {
+			return teamMatchMapper.toResponse(teamMatch);
+		}
+		
+		if (newTeamId.equals(dto.teamId()) && newMatchId.equals(dto.matchId()) && !newGoals.equals(teamMatch.getGoals())) {
+			teamMatch.setGoals(newGoals);		
+			return teamMatchMapper.toResponse(teamMatchRepository.save(teamMatch)); 
+		}
+		
+		TeamMatchId newId = new TeamMatchId(newTeamId, newMatchId);
+		
+		Team team = teamRepository.findById(newTeamId)
 				.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
-			teamMatch.setTeam(team);
-		}
 		
-		if (dto.matchId() != null) {
-			Match match = matchRepository.findById(dto.matchId())
+		Match match = matchRepository.findById(newMatchId)
 				.orElseThrow(() -> new ResourceNotFoundException("Match not found."));
-			teamMatch.setMatch(match);
-		} 
 		
-		if (dto.goals() != null && dto.goals() != teamMatch.getGoals() && dto.goals() >= 0) {
-			teamMatch.setGoals(dto.goals());
-		}
+		TeamMatch teamMatchToSave = new TeamMatch();
+		teamMatchToSave.setId(newId);
+		teamMatchToSave.setTeam(team);
+		teamMatchToSave.setMatch(match);
+		teamMatchToSave.setGoals(newGoals);
 		
-		return teamMatchMapper.toResponse(teamMatchRepository.save(teamMatch));
+		teamMatchRepository.deleteById(id);
+		
+		return teamMatchMapper.toResponse(teamMatchRepository.save(teamMatchToSave));
 	}
 	
 	public void delete(UUID teamId, UUID matchId) {
