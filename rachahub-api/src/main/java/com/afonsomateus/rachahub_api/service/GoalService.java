@@ -3,9 +3,6 @@ package com.afonsomateus.rachahub_api.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.coyote.BadRequestException;
-import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.afonsomateus.rachahub_api.dto.goal.GoalRequestDTO;
@@ -20,7 +17,6 @@ import com.afonsomateus.rachahub_api.repository.GoalRepository;
 import com.afonsomateus.rachahub_api.repository.MatchRepository;
 import com.afonsomateus.rachahub_api.repository.PlayerRepository;
 import com.afonsomateus.rachahub_api.repository.TeamRepository;
-import com.afonsomateus.rachahub_api.utils.Helpers;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,14 +39,13 @@ public class GoalService {
 		Team team = teamRepository.findById(dto.teamId())
 			.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
 		
-		Goal goal = goalMapper.toEntity(dto);
-		goal.setPlayer(player);
-		goal.setMatch(match);
-		goal.setTeam(team);
+		Goal goal = Goal.builder()
+						.player(player)
+						.team(team)
+						.match(match)
+						.build();
 		
-		goal = goalRepository.save(goal);
-		
-		return goalMapper.toResponse(goal);
+		return goalMapper.toResponse(goalRepository.save(goal));
 	}
 	
 	public List<GoalResponseDTO> findAll() {
@@ -68,29 +63,40 @@ public class GoalService {
 	}
 	
 	public GoalResponseDTO update(UUID id, GoalRequestDTO dto) {
-		Goal goal = goalRepository.getReferenceById(id);
-		Player player = null;
-		Match match = null;
-		Team team = null;
+		Goal goal = goalRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Goal not found."));
 		
-		if (dto.playerId() != null) {
-			player = playerRepository.getReferenceById(dto.playerId());
-			goal.setPlayer(player);
+		UUID newPlayerId = dto.playerId() != null ? dto.playerId() : goal.getPlayer().getId();
+		UUID newTeamId = dto.teamId() != null ? dto.teamId() : goal.getTeam().getId();
+		UUID newMatchId = dto.matchId() != null ? dto.matchId() : goal.getMatch().getId();
+		
+		if (goal.getPlayer().getId().equals(newPlayerId) 
+			&& goal.getTeam().getId().equals(newTeamId) 
+			&& goal.getMatch().getId().equals(newMatchId) 
+		) {
+			return goalMapper.toResponse(goal);
 		}
 		
-		if (dto.matchId() != null) {
-			match = matchRepository.getReferenceById(dto.matchId());
-			goal.setMatch(match);
-		}
+		Player player = goal.getPlayer().getId().equals(newPlayerId) 
+				? goal.getPlayer()
+				: playerRepository.findById(dto.playerId())
+					.orElseThrow(() -> new ResourceNotFoundException("Player not found."));
 		
-		if (dto.teamId() != null) {
-			team = teamRepository.getReferenceById(dto.teamId());
-			goal.setTeam(team);
-		}
+		Team team = goal.getTeam().getId().equals(newTeamId)
+				? goal.getTeam()
+				: teamRepository.findById(dto.teamId())
+					.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
 		
-		goalRepository.save(goal);
+		Match match = goal.getMatch().getId().equals(newMatchId)
+				? goal.getMatch()
+				: matchRepository.findById(dto.matchId())
+					.orElseThrow(() -> new ResourceNotFoundException("Match not found."));
 		
-		return goalMapper.toResponse(goal);
+		goal.setPlayer(player);
+		goal.setTeam(team);
+		goal.setMatch(match);
+		
+		return goalMapper.toResponse(goalRepository.save(goal));
 	}
 	
 	public void delete(UUID id) {

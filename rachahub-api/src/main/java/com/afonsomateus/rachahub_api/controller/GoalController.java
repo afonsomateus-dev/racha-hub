@@ -3,9 +3,9 @@ package com.afonsomateus.rachahub_api.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.afonsomateus.rachahub_api.dto.general.OnCreate;
 import com.afonsomateus.rachahub_api.dto.goal.GoalRequestDTO;
 import com.afonsomateus.rachahub_api.dto.goal.GoalResponseDTO;
 import com.afonsomateus.rachahub_api.service.GoalService;
@@ -29,7 +30,7 @@ public class GoalController {
 	private final GoalService goalService;
 	
 	@PostMapping
-	public ResponseEntity<GoalResponseDTO> create(@Valid @RequestBody GoalRequestDTO dto) {
+	public ResponseEntity<GoalResponseDTO> create(@Validated(OnCreate.class) @RequestBody GoalRequestDTO dto) {
 		GoalResponseDTO response = goalService.create(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
