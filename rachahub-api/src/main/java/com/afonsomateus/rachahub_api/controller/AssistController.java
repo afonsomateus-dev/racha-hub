@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.afonsomateus.rachahub_api.dto.assist.AssistRequestDTO;
 import com.afonsomateus.rachahub_api.dto.assist.AssistResponseDTO;
+import com.afonsomateus.rachahub_api.dto.general.OnCreate;
 import com.afonsomateus.rachahub_api.service.AssistService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -28,7 +29,7 @@ public class AssistController {
 	private final AssistService assistService;
 	
 	@PostMapping
-	public ResponseEntity<AssistResponseDTO> create(@Valid @RequestBody AssistRequestDTO dto) {
+	public ResponseEntity<AssistResponseDTO> create(@Validated(OnCreate.class) @RequestBody AssistRequestDTO dto) {
 		AssistResponseDTO response = assistService.create(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
@@ -46,7 +47,10 @@ public class AssistController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<AssistResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody AssistRequestDTO dto) {
+	public ResponseEntity<AssistResponseDTO> update(
+		@PathVariable UUID id, 
+		@RequestBody AssistRequestDTO dto
+	) {
 		AssistResponseDTO response = assistService.update(id, dto);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

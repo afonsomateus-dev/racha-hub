@@ -37,12 +37,13 @@ public class AssistService {
 			.orElseThrow(() -> new ResourceNotFoundException("Match not found."));
 		
 		Team team = teamRepository.findById(dto.teamId())
-			.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
+			.orElseThrow(() -> new ResourceNotFoundException("Team not found."));	
 		
-		Assist assist = new Assist();
-		assist.setPlayer(player);
-		assist.setMatch(match);
-		assist.setTeam(team);
+		Assist assist = Assist.builder()
+							.player(player)
+							.match(match)
+							.team(team)
+							.build();
 		
 		return assistMapper.toResponse(assistRepository.save(assist));
 	}
@@ -65,27 +66,37 @@ public class AssistService {
 		Assist assist = assistRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Assist not found."));
 		
-		if (dto.playerId() != null) {
-			Player player = playerRepository.findById(dto.playerId())
-				.orElseThrow(() -> new ResourceNotFoundException("Player not found."));
-			assist.setPlayer(player);
+		UUID newPlayerId = dto.playerId() != null ? dto.playerId() : assist.getPlayer().getId();
+		UUID newTeamId = dto.teamId() != null ? dto.teamId() : assist.getTeam().getId();
+		UUID newMatchId = dto.matchId() != null ? dto.matchId() : assist.getMatch().getId();
+		
+		if (assist.getPlayer().getId().equals(newPlayerId) 
+			&& assist.getTeam().getId().equals(newTeamId) 
+			&& assist.getMatch().getId().equals(newMatchId) 
+		) {
+			return assistMapper.toResponse(assist);
 		}
 		
-		if (dto.teamId() != null) {
-			Team team = teamRepository.findById(dto.teamId())
+		Player player = assist.getPlayer().getId().equals(newPlayerId) 
+				? assist.getPlayer()
+				: playerRepository.findById(dto.playerId())
+					.orElseThrow(() -> new ResourceNotFoundException("Player not found."));
+		
+		Team team = assist.getTeam().getId().equals(newTeamId)
+				? assist.getTeam()
+				: teamRepository.findById(dto.teamId())
 					.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
-			assist.setTeam(team);
-		}
 		
-		if (dto.matchId() != null) {
-			Match match = matchRepository.findById(dto.matchId())
-				.orElseThrow(() -> new ResourceNotFoundException("Match not found."));
-			assist.setMatch(match);
-		}
+		Match match = assist.getMatch().getId().equals(newMatchId)
+				? assist.getMatch()
+				: matchRepository.findById(dto.matchId())
+					.orElseThrow(() -> new ResourceNotFoundException("Match not found."));
 		
-		assistRepository.save(assist);
+		assist.setPlayer(player);
+		assist.setTeam(team);
+		assist.setMatch(match);
 		
-		return assistMapper.toResponse(assist);
+		return assistMapper.toResponse(assistRepository.save(assist));
 	}
 	
 	public void delete(UUID id) {
