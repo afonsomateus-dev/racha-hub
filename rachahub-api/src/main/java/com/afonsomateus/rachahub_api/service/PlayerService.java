@@ -14,15 +14,13 @@ import com.afonsomateus.rachahub_api.mapper.PlayerMapper;
 import com.afonsomateus.rachahub_api.repository.PlayerRepository;
 import com.afonsomateus.rachahub_api.utils.Helpers;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class PlayerService {
-	private PlayerRepository playerRepository;
-	private PlayerMapper playerMapper;
-	
-	public PlayerService(PlayerRepository repository, PlayerMapper mapper) {
-		this.playerRepository = repository;
-		this.playerMapper = mapper;
-	}
+	private final PlayerRepository playerRepository;
+	private final PlayerMapper playerMapper;
 	
 	public PlayerResponseDTO create(PlayerRequestDTO dto) {
 		Player player = playerMapper.toEntity(dto);
@@ -38,7 +36,7 @@ public class PlayerService {
 			.toList();	
 	}
 	
-	public PlayerResponseDTO getById(UUID id) {
+	public PlayerResponseDTO findById(UUID id) {
 		Player player = playerRepository
 			.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Player not found."));
