@@ -1,10 +1,13 @@
 package com.afonsomateus.rachahub_api.dto.team;
 
+import com.afonsomateus.rachahub_api.dto.general.OnCreate;
+
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public record TeamRequestDTO(
-	@NotNull
-	@NotBlank
+	@NotBlank(
+		groups = OnCreate.class,
+		message = "name is required."
+	)
 	String name
 ) {}

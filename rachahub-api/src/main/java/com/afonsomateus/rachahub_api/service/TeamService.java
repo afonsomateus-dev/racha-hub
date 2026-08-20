@@ -14,15 +14,13 @@ import com.afonsomateus.rachahub_api.mapper.TeamMapper;
 import com.afonsomateus.rachahub_api.repository.TeamRepository;
 import com.afonsomateus.rachahub_api.utils.Helpers;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class TeamService {
 	private final TeamRepository teamRepository;
 	private final TeamMapper teamMapper;
-	
-	public TeamService(TeamRepository repository, TeamMapper mapper) {
-		this.teamRepository = repository;
-		this.teamMapper = mapper;
-	}
 	
 	public TeamResponseDTO create(TeamRequestDTO dto) {
 		Team team = teamMapper.toEntity(dto);
@@ -38,7 +36,7 @@ public class TeamService {
 			.toList();
 	}
 	
-	public TeamResponseDTO getById(UUID id) {
+	public TeamResponseDTO findById(UUID id) {
 		Team team = teamRepository
 			.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Team not found."));
