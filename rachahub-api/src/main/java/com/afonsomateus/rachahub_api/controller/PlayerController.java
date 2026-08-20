@@ -20,7 +20,6 @@ import com.afonsomateus.rachahub_api.dto.player.PlayerRequestDTO;
 import com.afonsomateus.rachahub_api.dto.player.PlayerResponseDTO;
 import com.afonsomateus.rachahub_api.service.PlayerService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
