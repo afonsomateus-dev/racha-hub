@@ -14,15 +14,13 @@ import com.afonsomateus.rachahub_api.mapper.SeasonMapper;
 import com.afonsomateus.rachahub_api.repository.SeasonRepository;
 import com.afonsomateus.rachahub_api.utils.Helpers;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class SeasonService {
 	private final SeasonRepository seasonRepository;
 	private final SeasonMapper seasonMapper;
-	
-	public SeasonService(SeasonRepository repository, SeasonMapper mapper) {
-		this.seasonRepository = repository;
-		this.seasonMapper = mapper;
-	}
 	
 	public SeasonResponseDTO create(SeasonRequestDTO dto) {
 		Season season = seasonMapper.toEntity(dto);
