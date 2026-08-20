@@ -16,17 +16,14 @@ import com.afonsomateus.rachahub_api.repository.MatchRepository;
 import com.afonsomateus.rachahub_api.repository.SeasonRepository;
 import com.afonsomateus.rachahub_api.utils.Helpers;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MatchService {
 	private final MatchRepository matchRepository;
 	private final SeasonRepository seasonRepository;
 	private final MatchMapper matchMapper;
-	
-	public MatchService(MatchRepository matchRepository, SeasonRepository seasonRepository, MatchMapper mapper) {
-		this.matchRepository = matchRepository;
-		this.matchMapper = mapper;
-		this.seasonRepository = seasonRepository;
-	}
 	
 	public MatchResponseDTO create(MatchRequestDTO dto) {
 		Season season = seasonRepository.findById(dto.seasonId())
