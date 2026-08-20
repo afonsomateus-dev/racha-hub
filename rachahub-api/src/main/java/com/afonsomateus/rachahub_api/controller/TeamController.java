@@ -19,7 +19,6 @@ import com.afonsomateus.rachahub_api.dto.general.OnCreate;
 import com.afonsomateus.rachahub_api.dto.team.TeamRequestDTO;
 import com.afonsomateus.rachahub_api.dto.team.TeamResponseDTO;
 import com.afonsomateus.rachahub_api.service.TeamService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
