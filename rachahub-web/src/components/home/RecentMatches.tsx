@@ -1,9 +1,6 @@
+import type { RecentMatchesProps } from "@types";
+import { fmtDate } from "@utils";
 import { ChevronRight } from "lucide-react";
-import { fmtDate } from "../../utils/helpers";
-import type { RecentMatchesProps } from "../../types/general";
-import type { CSSProperties } from "react";
-
-const D: CSSProperties = { fontFamily: "'Barlow Condensed', sans-serif" };
 
 export const RecentMatches = ({ matches }: RecentMatchesProps) => {
   return (
@@ -28,9 +25,9 @@ export const RecentMatches = ({ matches }: RecentMatchesProps) => {
                 <div className="text-[10px] text-white/25">{m.location}</div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xl font-black text-white" style={D}>{m.teamA.score}</span>
+                <span className="text-xl font-black text-white font-title">{m.teamA.score}</span>
                 <span className="text-xs text-white/20">×</span>
-                <span className="text-xl font-black text-white" style={D}>{m.teamB.score}</span>
+                <span className="text-xl font-black text-white font-title">{m.teamB.score}</span>
               </div>
               <ChevronRight className="w-3.5 h-3.5 text-white/15" />
             </div>

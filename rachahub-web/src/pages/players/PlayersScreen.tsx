@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { PLAYERS } from "../constants";
-import { Av, Dot, Pos } from "../atoms";
+import { PLAYERS } from "../../constants";
+import { useNavigate } from "react-router";
+import { Av, Dot, Pos } from "@atoms";
 import { ChevronRight } from "lucide-react";
+
 
 export const PlayersScreen = () => {
   const [q, setQ] = useState("");
@@ -9,6 +11,13 @@ export const PlayersScreen = () => {
     p.name.toLowerCase().includes(q.toLowerCase()) ||
     p.nick.toLowerCase().includes(q.toLowerCase())
   );
+  const navigate = useNavigate();
+
+  const handleNavigate = (id: number) => {
+    console.log('entrou');
+
+    navigate(`/players/${id}`);
+  }
 
   return (
     <div className="flex flex-col gap-4 pb-4">
@@ -30,7 +39,7 @@ export const PlayersScreen = () => {
             key={p.id}
             className="flex items-center gap-4 p-4 rounded-2xl cursor-pointer active:scale-[0.98] transition-transform"
             style={{ background: "#141419", border: "1px solid rgba(255,255,255,0.06)" }}
-            onClick={() => {}}
+            onClick={() => { handleNavigate(p.id) }}
           >
             <span className="text-xs text-white/20 font-bold w-4 text-center shrink-0 font-title">{i + 1}</span>
             <Av player={p} size="lg" />

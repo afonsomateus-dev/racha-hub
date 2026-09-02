@@ -1,6 +1,6 @@
 import { Flame, Target, Trophy, Users } from "lucide-react";
-import type { HighlightsProps } from "../../types/general";
-import { Av } from "../../atoms";
+import { Av } from "@atoms";
+import type { HighlightsProps } from "@types";
 
 export const Highlights = ({ players }: HighlightsProps) => {
   const topGoals = [...players].sort((a, b) => b.goals - a.goals)[0];

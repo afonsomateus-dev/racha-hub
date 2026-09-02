@@ -1,9 +1,7 @@
+import type { HomeHeroProps } from "@types";
+import { fmtDate } from "@utils";
 import { Calendar, ChevronRight, MapPin } from "lucide-react";
-import type { HomeHeroProps } from "../../types/general";
-import { fmtDate } from "../../utils/helpers";
-import type { CSSProperties } from "react";
 
-const D: CSSProperties = { fontFamily: "'Barlow Condensed', sans-serif" };
 
 export const HomeHero = ({ match, winA, draw }: HomeHeroProps) => {
   return (
@@ -27,15 +25,15 @@ export const HomeHero = ({ match, winA, draw }: HomeHeroProps) => {
       </div>
       <div className="flex items-center justify-center gap-8">
         <div className="flex-1 text-right">
-          <div className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-1">Time A</div>
-          <div style={{ ...D, fontSize: "5rem", fontWeight: 900, lineHeight: 1, color: winA ? "#00E87A" : draw ? "#f0f0f5" : "#FF3B30" }}>
+          <div className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-1 font-title">Time A</div>
+          <div style={{ fontSize: "5rem", fontWeight: 900, lineHeight: 1, color: winA ? "#00E87A" : draw ? "#f0f0f5" : "#FF3B30" }}>
             {match.teamA.score}
           </div>
         </div>
-        <div className="text-2xl text-white/15 pb-3" style={D}>×</div>
+        <div className="text-2xl text-white/15 pb-3 font-title">×</div>
         <div className="flex-1 text-left">
-          <div className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-1">Time B</div>
-          <div style={{ ...D, fontSize: "5rem", fontWeight: 900, lineHeight: 1, color: !winA && !draw ? "#00E87A" : draw ? "#f0f0f5" : "#FF3B30" }}>
+          <div className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-1 font-title">Time B</div>
+          <div style={{ fontSize: "5rem", fontWeight: 900, lineHeight: 1, color: !winA && !draw ? "#00E87A" : draw ? "#f0f0f5" : "#FF3B30" }}>
             {match.teamB.score}
           </div>
         </div>

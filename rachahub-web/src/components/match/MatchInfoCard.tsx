@@ -1,7 +1,6 @@
-import type { MatchInfoCardProps } from "../../types/match";
+import type { MatchInfoCardProps } from "@types";
+import { fmtDate, getPlayer, initials } from "@utils";
 import { Calendar, ChevronRight, MapPin, Users } from "lucide-react";
-import { fmtDate, getPlayer, initials } from "../../utils/helpers";
-
 
 export const MatchInfoCard = ({ matches }: MatchInfoCardProps) => {
   return (

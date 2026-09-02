@@ -1,4 +1,4 @@
-import type { RankingTabsProps } from "../../types/ranking";
+import type { RankingTabsProps } from "@types";
 
 export const RankingTabs = ({ tabs, onSelect, currentTab }: RankingTabsProps) => {
   return (

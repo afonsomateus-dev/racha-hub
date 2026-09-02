@@ -1,8 +1,7 @@
+import { Highlights, HomeHero, Podium, RecentMatches } from "@components";
 import { MATCHES, PLAYERS } from "../constants";
-import { HomeHero } from "../components/home/HomeHero";
-import { Podium } from "../components/home/Podium";
-import { Highlights } from "../components/home/Highlights";
-import { RecentMatches } from "../components/home/RecentMatches";
+
+
 export const HomeScreen = () => {
   const last = MATCHES[0];
   const byWins = [...PLAYERS].sort((a, b) => b.wins - a.wins);

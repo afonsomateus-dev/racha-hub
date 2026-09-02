@@ -14,3 +14,23 @@ export interface Player {
   color: string;
   lastResults: Result[];
 }
+
+export interface PlayerProfileScreenProps {
+  player: Player;
+}
+
+export interface PlayerCardProps {
+  player: Player;
+}
+
+export interface PlayerStatsGridProps {
+  player: Player
+}
+
+export interface PlayerWinRateBarProps {
+  player: Player;
+}
+
+export interface PlayerGoalsChartProps {
+  player: Player;
+}

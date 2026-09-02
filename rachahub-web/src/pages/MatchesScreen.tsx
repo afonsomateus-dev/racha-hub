@@ -1,4 +1,4 @@
-import { MatchInfoCard } from "../components/match/MatchInfoCard";
+import { MatchInfoCard } from "@components";
 import { MATCHES } from "../constants";
 
 export const MatchesScreen = () => {

@@ -1,7 +1,7 @@
-import { Av, Dot, Medal, Pos } from "../../atoms";
-import type { Player } from "../../types/player";
-import type { RankingTopPositionsProps } from "../../types/ranking";
-import { winRate } from "../../utils/helpers";
+import { Av, Dot, Medal, Pos } from "@atoms";
+import type { Player, RankingTopPositionsProps } from "@types";
+import { winRate } from "@utils";
+
 
 export const RankingTopPositions = ({ players, currentTab }: RankingTopPositionsProps) => {
   const sorted = [...players].sort((a, b) => {

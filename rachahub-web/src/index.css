@@ -1,10 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-  --font-title: "Barlow Condensed", sans-serif,
-  --font-app: "Inter", sans-serif
-}
-
-* {
-  font-family: "Inter", sans-serif;
+  --font-title: "Barlow Condensed", sans-serif;
+  --font-app: "Inter", sans-serif;
+  --color-background: #0b0b0f;
+  --color-foreground: #f0f0f5;
+  --card: #141419;
+  --card-foreground: #f0f0f5;
+  --popover: #141419;
+  --popover-foreground: #f0f0f5;
+  --primary: #00e87a;
+  --primary-foreground: #0b0b0f;
+  --secondary: #1e1e28;
+  --secondary-foreground: #f0f0f5;
+  --muted: #1a1a22;
+  --muted-foreground: #5c5c70;
+  --accent: #ffb800;
+  --accent-foreground: #0b0b0f;
+  --destructive: #ff3b30;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.07);
+  --input: #1e1e28;
+  --input-background: #1a1a22;
+  --switch-background: #2a2a36;
+  --font-weight-medium: 600;
+  --font-weight-normal: 400;
+  --ring: #00e87a;
+  --chart-1: #00e87a;
+  --chart-2: #ffb800;
+  --chart-3: #3b82f6;
+  --chart-4: #f97316;
+  --chart-5: #a855f7;
+  --radius: 0.875rem;
+  --sidebar: #0e0e13;
+  --sidebar-foreground: #f0f0f5;
+  --sidebar-primary: #00e87a;
+  --sidebar-primary-foreground: #0b0b0f;
+  --sidebar-accent: #1a1a22;
+  --sidebar-accent-foreground: #f0f0f5;
+  --sidebar-border: rgba(255, 255, 255, 0.05);
+  --sidebar-ring: #00e87a;
 }
